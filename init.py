@@ -1,6 +1,9 @@
 # init.py
-def init():
-  pass
+import random as rnd
+def init() -> list[int]:
+  combinaison = [rnd.randint(0,8) for i in range(4)]
+  return(combinaison)
   
 if __name__ == "__main__": # test
-  pass
+  combinaison = init()
+  print(combinaison)
