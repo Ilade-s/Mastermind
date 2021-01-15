@@ -1,6 +1,15 @@
 # test.py
-def test():
-  pass
+def test(CombiUser : list, combiOrigin : list) -> list:
+  """donné deux listes : combiUser et combiOrigin, renvoie une liste de Noirs (N) et de Blancs (B)"""
+  listNoirBlanc = []
+  for i in range(len(CombiUser)):
+    if CombiUser[i]==combiOrigin[i]:
+      listNoirBlanc.append("N")
+    elif CombiUser[i] in combiOrigin:
+      listNoirBlanc.append("B")
+  return listNoirBlanc
   
 if __name__ == "__main__": # test
-  pass
+  combiUser = [1,2,3,4]
+  combiOrigin = [1,5,4,6]
+  print(test(combiUser,combiOrigin))
