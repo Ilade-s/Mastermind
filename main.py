@@ -1,5 +1,6 @@
 # main.py
 # Texte d'explication
+from init import *
 from test import *
 from essai import *
 
@@ -13,7 +14,9 @@ print("\a") ; print("\t\tAmusez-vous bien !")
 input("Entrée pour commencer le jeu...")
 # programme
 nEssais = 0
-while nEssais<10:
+CombinaisonATrouver = init()
+CombinaisonUser = []
+while nEssais<10 or CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
     CombinaisonUser = []
     for ninput in range(4):
@@ -21,3 +24,9 @@ while nEssais<10:
     print("Combinaison choisie :",CombinaisonUser)
     ResultatEssai = test(CombinaisonUser)
     print("Résultat :",ResultatEssai)
+if CombinaisonUser==CombinaisonATrouver: # Si gagné
+    print("Bravo, la combinaison était bien",CombinaisonATrouver)
+    print("Gagné !")
+else:
+    print("Pas de chance, la combinaison a trouver était :",CombinaisonATrouver)
+    print("Perdu !")
