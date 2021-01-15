@@ -18,11 +18,12 @@ CombinaisonATrouver = init()
 CombinaisonUser = []
 while nEssais<10 or CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
+    print(CombinaisonATrouver)
     CombinaisonUser = []
     for ninput in range(4):
         CombinaisonUser.append(int(input("Input couleur/valeur "+str(ninput+1)+" : ")))
     print("Combinaison choisie :",CombinaisonUser)
-    ResultatEssai = test(CombinaisonUser)
+    ResultatEssai = test(CombinaisonUser,CombinaisonATrouver)
     print("Résultat :",ResultatEssai)
 if CombinaisonUser==CombinaisonATrouver: # Si gagné
     print("Bravo, la combinaison était bien",CombinaisonATrouver)
