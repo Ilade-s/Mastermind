@@ -15,8 +15,7 @@ input("Entrée pour commencer le jeu...")
 nEssais = 0
 CombinaisonATrouver = init()
 CombinaisonUser = []
-CombiTrouvee = False
-while nEssais<10 or CombiTrouvee: # Boucle jeu
+while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
     print(CombinaisonATrouver)
     CombinaisonUser = []
@@ -24,7 +23,6 @@ while nEssais<10 or CombiTrouvee: # Boucle jeu
         CombinaisonUser.append(int(input("Input couleur/valeur "+str(ninput+1)+" : ")))
     print("Combinaison choisie :",CombinaisonUser)
     ResultatEssai = test(CombinaisonUser,CombinaisonATrouver)
-    CombiTrouvee = ResultatEssai
     print("Résultat :",ResultatEssai)
 if CombinaisonUser==CombinaisonATrouver: # Si gagné
     print("Bravo, la combinaison était bien",CombinaisonATrouver)
