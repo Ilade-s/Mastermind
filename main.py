@@ -1,9 +1,22 @@
 # main.py
-# Texte d'explication
 from init import *
 from test import *
-from tkinter import *
+from tkinter import * # GUI
+class fenetreMain:
+    def __init__(self): # Premier affichage
+        label = Label(self, text="avant")
+        label.pack()
+    def updateClr(self): # update à chaque choix de couleur
+        pass
+    def updateTry(self): # update à chaque essai de combinaison
+        pass
+class SplashScreen(fenetreMain): # Fenetre secondaire
+    def __init__(self,parent):
+        label = Label(parent, text="test")
+        label.pack(padx=5,pady=5)
+# Texte d'explication (introduction)
 root = Tk()
+root.title("Introduction")
 label = Label(root, text="Bienvenue sur mon jeu de Mastermind !")
 label.pack(padx=5,pady=5)
 label = Label(root, text="Vous avez 10 essais pour trouver une combinaison de 4 chiffres/couleurs de 0 à 8 inclus")
@@ -22,6 +35,12 @@ button = Button(root, text="Lancer le jeu", command=root.destroy)
 button.pack(pady=10,padx=10)
 root.mainloop()
 # programme
+fenetreMain = Tk()
+root.title("Mastermind")
+label = Label(root, text="avant")
+label.pack()
+A = SplashScreen
+root.mainloop()
 nEssais = 0
 CombinaisonATrouver = init()
 CombinaisonUser = []
