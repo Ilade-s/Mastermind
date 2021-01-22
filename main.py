@@ -2,6 +2,7 @@
 from init import *
 from test import *
 from tkinter import * # GUI
+from ToolsPerso import * # outils
 class fenetreMain:
     def __init__(self): # Premier affichage
         label = Label(self, text="avant")
@@ -56,11 +57,15 @@ while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
     print(CombinaisonATrouver)
     CombinaisonUser = []
-    input = 10
+    inputU = -1
     for ninput in range(4):
-        while input==10:
-            input = int(input("Input couleur/valeur "+str(ninput+1)+" : "))  
-            CombinaisonUser.append(input)
+        while inputU==-1:
+            try:
+                inputU = int(input("Input couleur/valeur "+str(ninput+1)+" : "))  
+            except ValueError:
+                inputU = -1
+                Tools.suppr(1)
+        CombinaisonUser.append(inputU)
     print("Combinaison choisie :",CombinaisonUser)
     ResultatEssai = test(CombinaisonUser,CombinaisonATrouver)
     print("Résultat :",ResultatEssai)
