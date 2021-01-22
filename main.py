@@ -2,6 +2,7 @@
 # Texte d'explication
 from init import *
 from test import *
+from essai import *
 
 print("Bienvenue sur mon jeu de Mastermind !")
 print("Vous avez 10 essais pour trouver une combinaison de 4 chiffres/couleurs de 0 à 8 inclus")
@@ -18,9 +19,7 @@ CombinaisonUser = []
 while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
     print(CombinaisonATrouver)
-    CombinaisonUser = []
-    for ninput in range(4):
-        CombinaisonUser.append(int(input("Input couleur/valeur "+str(ninput+1)+" : ")))
+    CombinaisonUser = essai()
     print("Combinaison choisie :",CombinaisonUser)
     ResultatEssai = test(CombinaisonUser,CombinaisonATrouver)
     print("Résultat :",ResultatEssai)
