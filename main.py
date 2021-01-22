@@ -35,11 +35,19 @@ button = Button(root, text="Lancer le jeu", command=root.destroy)
 button.pack(pady=10,padx=10)
 root.mainloop()
 # programme
-fenetreMain = Tk()
+root = Tk()
 root.title("Mastermind")
-label = Label(root, text="avant")
-label.pack()
-A = SplashScreen
+root.geometry("500x500")
+for i in range(4):
+    root.rowconfigure(i,weight=1)
+for j in range(4):
+    root.columnconfigure(j,weight=1)
+label = Label(root, text="djfkjdsfjosdfjosdfjsdfdsigfh")
+label.grid(row=0,column=0,columnspan=4)
+button = Button(root, text="Valider", command=root.destroy, bg="#6bc55d", activebackground="grey") # bouton vert 
+button.grid(row=3,column=1,ipadx=20,ipady=20)
+button = Button(root, text="Annuler", command=root.destroy, bg="#db2915", activebackground="grey") # bouton rouge
+button.grid(row=3,column=2,ipadx=20,ipady=20)
 root.mainloop()
 nEssais = 0
 CombinaisonATrouver = init()
@@ -48,8 +56,11 @@ while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
     print(CombinaisonATrouver)
     CombinaisonUser = []
+    input = 10
     for ninput in range(4):
-        CombinaisonUser.append(int(input("Input couleur/valeur "+str(ninput+1)+" : ")))
+        while input==10:
+            input = int(input("Input couleur/valeur "+str(ninput+1)+" : "))  
+            CombinaisonUser.append(input)
     print("Combinaison choisie :",CombinaisonUser)
     ResultatEssai = test(CombinaisonUser,CombinaisonATrouver)
     print("Résultat :",ResultatEssai)
