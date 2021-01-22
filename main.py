@@ -17,7 +17,7 @@ CombinaisonATrouver = init()
 CombinaisonUser = []
 while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
-    print(CombinaisonATrouver)
+    # print(CombinaisonATrouver) debug victoire
     CombinaisonUser = []
     for ninput in range(4):
         CombinaisonUser.append(int(input("Input couleur/valeur "+str(ninput+1)+" : ")))
