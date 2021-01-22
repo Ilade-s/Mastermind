@@ -3,18 +3,6 @@ from init import *
 from test import *
 from tkinter import * # GUI
 from ToolsPerso import * # outils
-class fenetreMain:
-    def __init__(self): # Premier affichage
-        label = Label(self, text="avant")
-        label.pack()
-    def updateClr(self): # update à chaque choix de couleur
-        pass
-    def updateTry(self): # update à chaque essai de combinaison
-        pass
-class SplashScreen(fenetreMain): # Fenetre secondaire
-    def __init__(self,parent):
-        label = Label(parent, text="test")
-        label.pack(padx=5,pady=5)
 # Texte d'explication (introduction)
 root = Tk()
 root.title("Introduction")
