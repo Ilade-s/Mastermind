@@ -53,7 +53,7 @@ while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     # print(CombinaisonATrouver) # debug victoire
     CombinaisonUser = essai()
     while CombinaisonUser==-1: # Demande Combinaison
-        print("Erreur de format")
+        Tools.suppr(1)
         CombinaisonUser = essai()
     print("Combinaison choisie :",CombinaisonUser)
     ResultatEssai = test(CombinaisonUser,CombinaisonATrouver)
