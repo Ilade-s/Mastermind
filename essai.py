@@ -1,6 +1,6 @@
 def essai():
-    """Demande à l'utilisateur et renvoie une liste des quatres couleurs choisies (de 0 à 8)"""
-    clrs = input("Couleurs choisies au format xxxx (ex : 0123) : ")
+    """Demande à l'utilisateur et renvoie une liste des quatres couleurs choisies (de 0 à 8) si inputs valides (sinon -1 en cas d'erreur)"""
+    clrs = input("Couleurs choisies au format xxxx (ex : 0123) entre 0 et 8 inclus : ")
     CombClrs = []
     for i in clrs:
         try:
