@@ -1,6 +1,7 @@
 # main.py
 from init import *
 from test import *
+from essai import *
 from tkinter import * # GUI
 from ToolsPerso import * # outils
 # Texte d'explication (introduction)
@@ -43,21 +44,17 @@ button.grid(row=3,column=1,ipadx=20,ipady=20)
 button = Button(root, text="Annuler", command=root.destroy, bg="#db2915", activebackground="grey") # bouton rouge
 button.grid(row=3,column=2,ipadx=20,ipady=20)
 root.mainloop()
+# programme
 nEssais = 0
+CombinaisonATrouver = init()
 CombinaisonUser = []
 while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
-    print(CombinaisonATrouver)
-    CombinaisonUser = []
-    inputU = -1
-    for ninput in range(4):
-        while inputU==-1:
-            try:
-                inputU = int(input("Input couleur/valeur "+str(ninput+1)+" : "))  
-            except ValueError:
-                inputU = -1
-                Tools.suppr(1)
-        CombinaisonUser.append(inputU)
+    # print(CombinaisonATrouver) # debug victoire
+    CombinaisonUser = essai()
+    while CombinaisonUser==-1: # Demande Combinaison
+        print("Erreur de format")
+        CombinaisonUser = essai()
     print("Combinaison choisie :",CombinaisonUser)
     ResultatEssai = test(CombinaisonUser,CombinaisonATrouver)
     print("Résultat :",ResultatEssai)
