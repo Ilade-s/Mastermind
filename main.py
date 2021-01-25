@@ -46,7 +46,7 @@ class Affichages:
         # Affichage combinaison user
         for i in range(len(CombinaisonUser)):
             valClr = CombinaisonUser[i]
-            label = Button(root, text=valClr, bg=couleurs[valClr], relief=SOLID, font=(8), command=ChoixCombinaison)
+            label = Label(root, text=valClr, bg=couleurs[valClr], relief=SOLID, font=(8))
             label.grid(row=2, column=i,ipadx=75,ipady=75)
         # Affichage combinaison noir et blancs
         for i in range(len(ResultatEssai)):
@@ -54,8 +54,8 @@ class Affichages:
             label = Label(root, text=valClr, bg=couleurs[valClr], relief=SOLID, foreground="red", font=(8))
             label.grid(row=1, column=i,ipadx=75,ipady=75)
         # Dernière ligne
-        label = Label(root, text="/\Combinaison choisie/\\", font=(10))
-        label.grid(row=3,column=1,columnspan=2)
+        label = Button(root, text="/\Choisir votre combinaison/\\", font=(10), bg="#4d99c7", command=ChoixCombinaison)
+        label.grid(row=3,column=1,columnspan=2,ipadx=40,ipady=20)
         button = Button(root, text="Valider", command=root.destroy, bg="#6bc55d", activebackground="grey") # bouton vert 
         button.grid(row=3,column=0,ipadx=50,ipady=30)
         button = Button(root, text="Annuler", command=root.destroy, bg="#db2915", activebackground="grey") # bouton rouge
@@ -68,8 +68,8 @@ class Affichages:
         for j in range(6):
             root.columnconfigure(j,weight=1)
         # Texte intro
-        label = Label(root, text="Cliquez sur quatres couleurs pour choisir votre combinaison :")
-        label.grid(column=0,row=0, columnspan=3)
+        label = Label(root, text="Cliquez sur quatres couleurs pour choisir votre combinaison :", font=(10))
+        label.grid(column=0,row=0, columnspan=6)
 # Texte d'explication (introduction)
 root = Tk()
 Affichage = Affichages
@@ -78,7 +78,8 @@ Affichage.Intro(root)
 CombinaisonUser = [-1,-1,-1,-1]
 ResultatEssai = [-1,-1,-1,-1]
 CombinaisonATrouver = init()
-couleurs = {-1:"grey","B":"white","N":"black"}
+couleurs = {-1:"grey","B":"white","N":"black"\
+    ,0:"red",1:"yellow",2:"orange",3:"blue",4:"green",5:"white",6:"pink",7:"purple",8:"#00ffec"}
 root = Tk()
 root.geometry("600x600")
 Affichage.Principale(root) # Affichage première fenêtre
