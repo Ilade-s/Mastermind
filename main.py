@@ -1,11 +1,11 @@
 # main.py
-import tkinter
 from init import *
 from test import *
 from essai import *
 from tkinter import * # GUI
 from ToolsPerso import * # outils
-class Affichages(tkinter):
+from functools import partial # pour commande avec args tkinter
+class Affichages:
     """Affichages tkinter"""
     def Intro(root):
         """Fenêtre avec texte d'introduction"""
@@ -27,7 +27,7 @@ class Affichages(tkinter):
         button = Button(root, text="Lancer le jeu", command=root.destroy)
         button.pack(pady=10,padx=10)
         root.mainloop()
-    def Principale(root):
+    def Principale(root,self):
         """Fenêtre affichant la combinaison choisie et le résultat précédent, et permet à l'utilsateur de valider son choix"""
         root.title("Mastermind : fenêtre principale")
         for i in range(4):
@@ -39,7 +39,7 @@ class Affichages(tkinter):
         # Affichage combinaison user
         for i in range(len(CombinaisonUser)):
             valClr = CombinaisonUser[i]
-            label = Label(root, text=valClr, bg=couleurs[valClr], relief=SOLID, font=(8))
+            label = Button(root, text=valClr, bg=couleurs[valClr], relief=SOLID, font=(8), command=partial(root.title, "Clic Combinaison"))
             label.grid(row=2, column=i,ipadx=75,ipady=75)
         # Affichage combinaison noir et blancs
         for i in range(len(ResultatEssai)):
@@ -54,12 +54,19 @@ class Affichages(tkinter):
         button = Button(root, text="Annuler", command=root.destroy, bg="#db2915", activebackground="grey") # bouton rouge
         button.grid(row=3,column=3,ipadx=50,ipady=30)
         root.mainloop()
-    def Secondaire(root):
+    def Secondaire(self,root):
         root.title("Mastermind : choix combinaison")
-        
+        for i in range(5):
+            root.rowconfigure(i,weight=1)
+        for j in range(6):
+            root.columnconfigure(j,weight=1)
+        # Texte intro
+        label = Label(root, text="Cliquez sur quatres couleurs pour choisir votre combinaison :")
+        label.grid(column=0,row=0, columnspan=3)
 # Texte d'explication (introduction)
 root = Tk()
-Affichages.Intro(root)
+Affichage = Affichages
+Affichage.Intro(root)
 # programme
 CombinaisonUser = [-1,-1,-1,-1]
 ResultatEssai = [-1,-1,-1,-1]
@@ -67,7 +74,7 @@ CombinaisonATrouver = init()
 couleurs = {-1:"grey","B":"white","N":"black"}
 root = Tk()
 root.geometry("600x600")
-Affichages.Principale(root) # Affichage première fenêtre
+Affichage.Principale(root, Affichage) # Affichage première fenêtre
 # programme
 nEssais = 0
 CombinaisonATrouver = init()
