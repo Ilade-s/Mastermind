@@ -7,27 +7,45 @@ from tkinter import * # GUI
 from ToolsPerso import * # outils
 class Affichages(tkinter):
     """Affichages tkinter"""
+    def Intro(root):
+        """Fenêtre avec texte d'introduction"""
+        root.title("Introduction")
+        label = Label(root, text="Bienvenue sur mon jeu de Mastermind !")
+        label.pack(padx=5,pady=5)
+        label = Label(root, text="Vous avez 10 essais pour trouver une combinaison de 4 chiffres/couleurs de 0 à 8 inclus")
+        label.pack(padx=5,pady=5)
+        label = Label(root, text="A chaque essai, il vous faudra entrer les quatres chiffres (de 0 à 8) que vous pensez les bons")
+        label.pack(padx=5,pady=5)
+        label = Label(root, text="Après chaque essai, une liste de noir (N) et blanc (B) vous sera affiché : ")
+        label.pack(padx=5,pady=5)
+        label = Label(root, text="- Blanc (B) indique une bonne valeurs/couleurs mais mal placée dans la combinaison")
+        label.pack(padx=5,pady=5)
+        label = Label(root, text="- Noir (N) indique une valeur correcte et bien placée")
+        label.pack(padx=5,pady=5)
+        label = Label(root, text="Amusez-vous bien !")
+        label.pack(padx=5,pady=5)
+        button = Button(root, text="Lancer le jeu", command=root.destroy)
+        button.pack(pady=10,padx=10)
+        root.mainloop()
     def Principale(root):
-        """Fenêtre affichant la combinasion choisie et le résulata précédent, et permet à l'utilsateur de valider son choix"""
+        """Fenêtre affichant la combinaison choisie et le résultat précédent, et permet à l'utilsateur de valider son choix"""
+        root.title("Mastermind : fenêtre principale")
         for i in range(4):
             root.rowconfigure(i,weight=1)
         for j in range(4):
             root.columnconfigure(j,weight=1)
         label = Label(root, text="\/Résultat de l'essai précédent (gris et valeur -1 si vide)\/", font=(10))
         label.grid(row=0,column=0,columnspan=4)
-
         # Affichage combinaison user
         for i in range(len(CombinaisonUser)):
             valClr = CombinaisonUser[i]
             label = Label(root, text=valClr, bg=couleurs[valClr], relief=SOLID, font=(8))
             label.grid(row=2, column=i,ipadx=75,ipady=75)
-
         # Affichage combinaison noir et blancs
         for i in range(len(ResultatEssai)):
             valClr = ResultatEssai[i]
             label = Label(root, text=valClr, bg=couleurs[valClr], relief=SOLID, foreground="red", font=(8))
             label.grid(row=1, column=i,ipadx=75,ipady=75)
-
         # Dernière ligne
         label = Label(root, text="/\Combinaison choisie/\\", font=(10))
         label.grid(row=3,column=1,columnspan=2)
@@ -37,34 +55,17 @@ class Affichages(tkinter):
         button.grid(row=3,column=3,ipadx=50,ipady=30)
         root.mainloop()
     def Secondaire(root):
-        pass
+        root.title("Mastermind : choix combinaison")
+        
 # Texte d'explication (introduction)
 root = Tk()
-root.title("Introduction")
-label = Label(root, text="Bienvenue sur mon jeu de Mastermind !")
-label.pack(padx=5,pady=5)
-label = Label(root, text="Vous avez 10 essais pour trouver une combinaison de 4 chiffres/couleurs de 0 à 8 inclus")
-label.pack(padx=5,pady=5)
-label = Label(root, text="A chaque essai, il vous faudra entrer les quatres chiffres (de 0 à 8) que vous pensez les bons")
-label.pack(padx=5,pady=5)
-label = Label(root, text="Après chaque essai, une liste de noir (N) et blanc (B) vous sera affiché : ")
-label.pack(padx=5,pady=5)
-label = Label(root, text="- Blanc (B) indique une bonne valeurs/couleurs mais mal placée dans la combinaison")
-label.pack(padx=5,pady=5)
-label = Label(root, text="- Noir (N) indique une valeur correcte et bien placée")
-label.pack(padx=5,pady=5)
-label = Label(root, text="Amusez-vous bien !")
-label.pack(padx=5,pady=5)
-button = Button(root, text="Lancer le jeu", command=root.destroy)
-button.pack(pady=10,padx=10)
-root.mainloop()
+Affichages.Intro(root)
 # programme
 CombinaisonUser = [-1,-1,-1,-1]
 ResultatEssai = [-1,-1,-1,-1]
 CombinaisonATrouver = init()
 couleurs = {-1:"grey","B":"white","N":"black"}
 root = Tk()
-root.title("Mastermind")
 root.geometry("600x600")
 Affichages.Principale(root) # Affichage première fenêtre
 # programme
