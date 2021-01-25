@@ -1,10 +1,17 @@
-# main.py
+# Importation dépendances
 from init import *
 from test import *
 from essai import *
 from tkinter import * # GUI
 from ToolsPerso import * # outils
 from functools import partial # pour commande avec args tkinter
+
+def ChoixCombinaison():
+    """Action boutons combinaison de la fenêtre principale : Efface tout les éléments de la fenetre"""
+    for w in root.winfo_children():
+        w.destroy()
+    root.pack_propagate(0)
+    Affichage.Secondaire(root) # Affichage seconde fenêtre
 class Affichages:
     """Affichages tkinter"""
     def Intro(root):
@@ -27,7 +34,7 @@ class Affichages:
         button = Button(root, text="Lancer le jeu", command=root.destroy)
         button.pack(pady=10,padx=10)
         root.mainloop()
-    def Principale(root,self):
+    def Principale(root):
         """Fenêtre affichant la combinaison choisie et le résultat précédent, et permet à l'utilsateur de valider son choix"""
         root.title("Mastermind : fenêtre principale")
         for i in range(4):
@@ -39,7 +46,7 @@ class Affichages:
         # Affichage combinaison user
         for i in range(len(CombinaisonUser)):
             valClr = CombinaisonUser[i]
-            label = Button(root, text=valClr, bg=couleurs[valClr], relief=SOLID, font=(8), command=partial(root.title, "Clic Combinaison"))
+            label = Button(root, text=valClr, bg=couleurs[valClr], relief=SOLID, font=(8), command=ChoixCombinaison)
             label.grid(row=2, column=i,ipadx=75,ipady=75)
         # Affichage combinaison noir et blancs
         for i in range(len(ResultatEssai)):
@@ -54,7 +61,7 @@ class Affichages:
         button = Button(root, text="Annuler", command=root.destroy, bg="#db2915", activebackground="grey") # bouton rouge
         button.grid(row=3,column=3,ipadx=50,ipady=30)
         root.mainloop()
-    def Secondaire(self,root):
+    def Secondaire(root):
         root.title("Mastermind : choix combinaison")
         for i in range(5):
             root.rowconfigure(i,weight=1)
@@ -74,7 +81,7 @@ CombinaisonATrouver = init()
 couleurs = {-1:"grey","B":"white","N":"black"}
 root = Tk()
 root.geometry("600x600")
-Affichage.Principale(root, Affichage) # Affichage première fenêtre
+Affichage.Principale(root) # Affichage première fenêtre
 # programme
 nEssais = 0
 CombinaisonATrouver = init()

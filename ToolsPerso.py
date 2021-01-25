@@ -5,7 +5,7 @@ from tkinter import * # GUI
 try: # Fonctionnement suppr() sous windows
     kernel32 = ctypes.windll.kernel32 # IDLE suppression
     kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7) # IDLE suppression
-except OSError: pass
+except: pass
 class Tools:
     """Outils personnels pour routines :
         - suppression de lignes : suppr(n)
