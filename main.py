@@ -6,8 +6,10 @@ from tkinter import * # GUI
 from ToolsPerso import * # outils
 from functools import partial # pour commande avec args tkinter
 
+nEssais = 0
+CombinaisonATrouver = init()
 def TransitionAffichages(affPrincipal: bool, Données=None):
-    """Action boutons combinaison de la fenêtre principale : Efface tout les éléments de la fenetre"""
+    """Action boutons pour changements de fenêtre : Efface tout les éléments de la fenetre"""
     for w in root.winfo_children():
         w.destroy()
     root.pack_propagate(0)
@@ -16,15 +18,19 @@ def TransitionAffichages(affPrincipal: bool, Données=None):
     else:
         if Données==None: # Récupération données si présentes
             Affichage.CombinaisonUser = Données
-        Affichage.Principale(root) # Affichage première fenêtre
+        Affichage.Principale(root) # Affichage première fenêtre  
 def FinDePartie():
-    """Déclenchée par le bouton de validation de la fenêtre principale, renvoie un tuple (Fin?, Gagné?) deux booléens"""
+    """Fonction fille de FinDeTour, renvoie un tuple (Fin?, Gagné?), deux booléens"""
     if Affichage.Combinaison==CombinaisonATrouver: # Victoire
         return(True, True)
     if nEssais==10: # Défaite
         return(True, False)
     else: # Partie pas terminée
         return(False, False)
+def FinDeTour():
+    """Déclenchée par le bouton de validation de la fenêtre principale"""
+
+    pass
 class Affichages:
     """Affichages tkinter"""
     def __init__(self) -> None:
@@ -77,6 +83,7 @@ class Affichages:
         button.grid(row=3,column=3,ipadx=50,ipady=30)
         root.mainloop()
     def Secondaire(root):
+        CombUser = []
         root.title("Mastermind : choix combinaison")
         for i in range(5):
             root.rowconfigure(i,weight=1)
@@ -85,11 +92,17 @@ class Affichages:
         # Texte intro
         label = Label(root, text="Cliquez sur quatres couleurs pour choisir votre combinaison :", font=(10))
         label.grid(column=0,row=0, columnspan=3)
-        # Boutons validation et annulation
+        # Boutons couleurs pour entrer la combinaison
 
+        # Affichages apercu combinaison entrée
+        StringVar(root, )
+        label = Label
+        # Boutons validation et annulation
+        button = Button(root, text="Valider", bg="#6bc55d", command=partial(TransitionAffichages, False, CombUser))
+        button.grid(row=4, column=0,ipadx=50,ipady=30)
+        button = Button(root, text="Annuler", bg="#db2915", command=partial(TransitionAffichages, False, None))
+        button.grid(row=4, column=2,ipadx=50,ipady=30)
 # Texte d'explication (introduction)
-nEssais = 0
-CombinaisonATrouver = init()
 root = Tk()
 Affichage = Affichages
 Affichage.Intro(root)
@@ -102,7 +115,7 @@ couleurs = {-1:"grey","B":"white","N":"black"\
 root = Tk()
 root.geometry("600x600")
 Affichage.Principale(root) # Affichage première fenêtre
-
+"""
 while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
     # print(CombinaisonATrouver) # debug victoire
@@ -119,3 +132,4 @@ if CombinaisonUser==CombinaisonATrouver: # Si gagné
 else:
     print("Pas de chance, la combinaison a trouver était :",CombinaisonATrouver)
     print("Perdu !")
+"""

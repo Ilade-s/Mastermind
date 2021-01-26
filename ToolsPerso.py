@@ -43,3 +43,9 @@ class Tools:
         nBin = bin(n)
         if nBin[len(nBin)-1]=="0": return(True)
         else: return(False)
+    def ListToStr(l: list) -> str:
+        """Donné une liste, revoie une string contenant, dans l'ordre, tous les éléments de la liste"""
+        s = ""
+        for e in l:
+            s+=str(e)
+        return(s)
