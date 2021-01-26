@@ -2,7 +2,7 @@
 from init import *
 from test import *
 from essai import *
-from tkinter import * # GUI
+from tkinter import *  # GUI
 from ToolsPerso import * # outils
 from functools import partial # pour commande avec args tkinter
 
@@ -83,7 +83,7 @@ class Affichages:
         button.grid(row=3,column=3,ipadx=50,ipady=30)
         root.mainloop()
     def Secondaire(root):
-        CombUser = []
+        CombUser = [-1,-1,-1,-1]
         root.title("Mastermind : choix combinaison")
         for i in range(5):
             root.rowconfigure(i,weight=1)
@@ -93,14 +93,19 @@ class Affichages:
         label = Label(root, text="Cliquez sur quatres couleurs pour choisir votre combinaison :", font=(10))
         label.grid(column=0,row=0, columnspan=3)
         # Boutons couleurs pour entrer la combinaison
-
+        for l in range(3):
+            for c in range(3):
+                valClr = c+3*l
+                button = Button(root, text=str(valClr), bg=couleurs[valClr], font=(10))
+                button.grid(row=1+l, column=c,ipadx=70,ipady=50)
         # Affichages apercu combinaison entrée
-        StringVar(root, )
-        label = Label
+        StrComb = StringVar(root, value=Tools.ListToStr(CombUser))
+        label = Label(root, textvariable=StrComb, foreground="red", font=(20))
+        label.grid(row=4, column=1)
         # Boutons validation et annulation
-        button = Button(root, text="Valider", bg="#6bc55d", command=partial(TransitionAffichages, False, CombUser))
+        button = Button(root, text="Valider", bg="#6bc55d", command=partial(TransitionAffichages, False, CombUser), font=(10))
         button.grid(row=4, column=0,ipadx=50,ipady=30)
-        button = Button(root, text="Annuler", bg="#db2915", command=partial(TransitionAffichages, False, None))
+        button = Button(root, text="Annuler", bg="#db2915", command=partial(TransitionAffichages, False, None),font=(10))
         button.grid(row=4, column=2,ipadx=50,ipady=30)
 # Texte d'explication (introduction)
 root = Tk()
