@@ -6,14 +6,29 @@ from tkinter import * # GUI
 from ToolsPerso import * # outils
 from functools import partial # pour commande avec args tkinter
 
-def ChoixCombinaison():
+def TransitionAffichages(affPrincipal: bool, Données=None):
     """Action boutons combinaison de la fenêtre principale : Efface tout les éléments de la fenetre"""
     for w in root.winfo_children():
         w.destroy()
     root.pack_propagate(0)
-    Affichage.Secondaire(root) # Affichage seconde fenêtre
+    if affPrincipal:    
+        Affichage.Secondaire(root) # Affichage seconde fenêtre
+    else:
+        if Données==None: # Récupération données si présentes
+            Affichage.CombinaisonUser = Données
+        Affichage.Principale(root) # Affichage première fenêtre
+def FinDePartie():
+    """Déclenchée par le bouton de validation de la fenêtre principale, renvoie un tuple (Fin?, Gagné?) deux booléens"""
+    if Affichage.Combinaison==CombinaisonATrouver: # Victoire
+        return(True, True)
+    if nEssais==10: # Défaite
+        return(True, False)
+    else: # Partie pas terminée
+        return(False, False)
 class Affichages:
     """Affichages tkinter"""
+    def __init__(self) -> None:
+        self.CombinaisonUser = []
     def Intro(root):
         """Fenêtre avec texte d'introduction"""
         root.title("Introduction")
@@ -46,15 +61,15 @@ class Affichages:
         # Affichage combinaison user
         for i in range(len(CombinaisonUser)):
             valClr = CombinaisonUser[i]
-            label = Label(root, text=valClr, bg=couleurs[valClr], relief=SOLID, font=(8))
+            label = Label(root, text=valClr, bg=couleurs[valClr], relief=RAISED, font=(8))
             label.grid(row=2, column=i,ipadx=75,ipady=75)
         # Affichage combinaison noir et blancs
         for i in range(len(ResultatEssai)):
             valClr = ResultatEssai[i]
-            label = Label(root, text=valClr, bg=couleurs[valClr], relief=SOLID, foreground="red", font=(8))
+            label = Label(root, text=valClr, bg=couleurs[valClr], relief=RAISED, foreground="red", font=(8))
             label.grid(row=1, column=i,ipadx=75,ipady=75)
         # Dernière ligne
-        label = Button(root, text="/\Choisir votre combinaison/\\", font=(10), bg="#4d99c7", command=ChoixCombinaison)
+        label = Button(root, text="/\Choisir votre combinaison/\\", font=(10), bg="#4d99c7", command=partial(TransitionAffichages, True))
         label.grid(row=3,column=1,columnspan=2,ipadx=40,ipady=20)
         button = Button(root, text="Valider", command=root.destroy, bg="#6bc55d", activebackground="grey") # bouton vert 
         button.grid(row=3,column=0,ipadx=50,ipady=30)
@@ -65,12 +80,16 @@ class Affichages:
         root.title("Mastermind : choix combinaison")
         for i in range(5):
             root.rowconfigure(i,weight=1)
-        for j in range(6):
+        for j in range(3):
             root.columnconfigure(j,weight=1)
         # Texte intro
         label = Label(root, text="Cliquez sur quatres couleurs pour choisir votre combinaison :", font=(10))
-        label.grid(column=0,row=0, columnspan=6)
+        label.grid(column=0,row=0, columnspan=3)
+        # Boutons validation et annulation
+
 # Texte d'explication (introduction)
+nEssais = 0
+CombinaisonATrouver = init()
 root = Tk()
 Affichage = Affichages
 Affichage.Intro(root)
@@ -83,9 +102,7 @@ couleurs = {-1:"grey","B":"white","N":"black"\
 root = Tk()
 root.geometry("600x600")
 Affichage.Principale(root) # Affichage première fenêtre
-# programme
-nEssais = 0
-CombinaisonATrouver = init()
+
 while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
     nEssais+=1
     # print(CombinaisonATrouver) # debug victoire
