@@ -2,6 +2,8 @@
 def test(CombiUser : list[int], combiOrigin : list[int]) -> list[str]:
   """Donné deux listes : combiUser et combiOrigin, renvoie une liste de Noirs (N) et de Blancs (B)"""
   listNoirBlanc = []
+  if len(CombiUser)!=4:
+    return listNoirBlanc
   for i in range(4):
     if CombiUser[i]==combiOrigin[i]:
       listNoirBlanc.append("N")

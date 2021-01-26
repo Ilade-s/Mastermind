@@ -16,7 +16,7 @@ def TransitionAffichages(affPrincipal: bool, Données=None):
     if affPrincipal:    
         Affichage.Secondaire(root) # Affichage seconde fenêtre
     else:
-        if Données==None: # Récupération données si présentes
+        if Données!=None: # Récupération données si présentes
             Affichage.CombinaisonUser = Données
         Affichage.Principale(root) # Affichage première fenêtre  
 def FinDePartie():
@@ -83,25 +83,32 @@ class Affichages:
         button.grid(row=3,column=3,ipadx=50,ipady=30)
         root.mainloop()
     def Secondaire(root):
-        CombUser = [-1,-1,-1,-1]
+        def ClicClr(clr):
+            """Ajoute la couleur choisie (selon le bouton) à CombUser si possible et met à jour les textes"""
+            if len(CombUser)<4:    
+                CombUser.append(clr)
+                labelInfo.configure(text="Encore "+str(4-len(CombUser))+" couleurs à choisir :")
+            if len(CombUser)==4:
+                labelInfo.configure(text="Vous pouvez maintenant valider")
+            labelAprecu.configure(text=Tools.ListToStr(CombUser))
+        CombUser = []
         root.title("Mastermind : choix combinaison")
         for i in range(5):
             root.rowconfigure(i,weight=1)
         for j in range(3):
             root.columnconfigure(j,weight=1)
         # Texte intro
-        label = Label(root, text="Cliquez sur quatres couleurs pour choisir votre combinaison :", font=(10))
-        label.grid(column=0,row=0, columnspan=3)
+        labelInfo = Label(root, text="Encore "+str(4-len(CombUser))+" couleurs à choisir :", font=(10))
+        labelInfo.grid(column=0,row=0, columnspan=3)
         # Boutons couleurs pour entrer la combinaison
         for l in range(3):
             for c in range(3):
                 valClr = c+3*l
-                button = Button(root, text=str(valClr), bg=couleurs[valClr], font=(10))
+                button = Button(root, text=str(valClr), bg=couleurs[valClr], font=(10), command=partial(ClicClr, valClr))
                 button.grid(row=1+l, column=c,ipadx=70,ipady=50)
         # Affichages apercu combinaison entrée
-        StrComb = StringVar(root, value=Tools.ListToStr(CombUser))
-        label = Label(root, textvariable=StrComb, foreground="red", font=(20))
-        label.grid(row=4, column=1)
+        labelAprecu = Label(root, text=Tools.ListToStr(CombUser), foreground="red", font=(20))
+        labelAprecu.grid(row=4, column=1)
         # Boutons validation et annulation
         button = Button(root, text="Valider", bg="#6bc55d", command=partial(TransitionAffichages, False, CombUser), font=(10))
         button.grid(row=4, column=0,ipadx=50,ipady=30)
