@@ -8,34 +8,36 @@ from functools import partial # pour commande avec args tkinter
 
 nEssais = 0
 CombinaisonATrouver = init()
+def CompleterResEssai(ResEssai: list):
+    """Compléte la liste ResultatEssai si sa taille est inférieure à 4"""
+    while len(ResEssai)<4:
+        ResEssai.append(-1)
+    return(ResEssai)
 def TransitionAffichages(affPrincipal: bool, Données=None):
     """Action boutons pour changements de fenêtre : Efface tout les éléments de la fenetre"""
     for w in root.winfo_children():
         w.destroy()
     root.pack_propagate(0)
     if affPrincipal:    
-        Affichage.Secondaire(root) # Affichage seconde fenêtre
+        Affichage.Secondaire() # Affichage seconde fenêtre
     else:
         if Données!=None: # Récupération données si présentes
             Affichage.CombinaisonUser = Données
-        Affichage.Principale(root) # Affichage première fenêtre  
-def FinDePartie():
+        Affichage.Principale() # Affichage première fenêtre  
+def FinDePartie() -> tuple:
     """Fonction fille de FinDeTour, renvoie un tuple (Fin?, Gagné?), deux booléens"""
-    if Affichage.Combinaison==CombinaisonATrouver: # Victoire
+    if Affichage.CombinaisonUser==CombinaisonATrouver: # Victoire
         return(True, True)
     if nEssais==10: # Défaite
         return(True, False)
     else: # Partie pas terminée
         return(False, False)
-def FinDeTour():
-    """Déclenchée par le bouton de validation de la fenêtre principale"""
-
-    pass
 class Affichages:
     """Affichages tkinter"""
     def __init__(self) -> None:
         self.CombinaisonUser = []
-    def Intro(root):
+        self.ResultatEssai = []
+    def Intro():
         """Fenêtre avec texte d'introduction"""
         root.title("Introduction")
         label = Label(root, text="Bienvenue sur mon jeu de Mastermind !")
@@ -55,8 +57,23 @@ class Affichages:
         button = Button(root, text="Lancer le jeu", command=root.destroy)
         button.pack(pady=10,padx=10)
         root.mainloop()
-    def Principale(root):
+    def Principale():
+        def ButtonCancel():
+            """Réinitialisation par clic bouton annuler"""
+            Affichage.CombinaisonUser = [-1,-1,-1,-1]
+            Affichage.Principale() # Mise à jour
+        def ButtonValider():
+            """Changement de tour avec bouton valider"""
+            ResultatFpartie = FinDePartie()
+            if ResultatFpartie[0]: # Partie terminée
+                if ResultatFpartie[1]: # Victoire
+                    Affichage.EcranVictoire()
+                else: # Défaite
+                    Affichage.EcranDefaite
+            Affichage.CombinaisonUser = [-1,-1,-1,-1]
+            Affichage.Principale() # Mise à jour
         """Fenêtre affichant la combinaison choisie et le résultat précédent, et permet à l'utilsateur de valider son choix"""
+        ResultatEssai = CompleterResEssai(test(Affichage.CombinaisonUser, CombinaisonATrouver))
         root.title("Mastermind : fenêtre principale")
         for i in range(4):
             root.rowconfigure(i,weight=1)
@@ -65,8 +82,8 @@ class Affichages:
         label = Label(root, text="\/Résultat de l'essai précédent (gris et valeur -1 si vide)\/", font=(10))
         label.grid(row=0,column=0,columnspan=4)
         # Affichage combinaison user
-        for i in range(len(CombinaisonUser)):
-            valClr = CombinaisonUser[i]
+        for i in range(len(Affichage.CombinaisonUser)):
+            valClr = Affichage.CombinaisonUser[i]
             label = Label(root, text=valClr, bg=couleurs[valClr], relief=RAISED, font=(8))
             label.grid(row=2, column=i,ipadx=75,ipady=75)
         # Affichage combinaison noir et blancs
@@ -77,12 +94,11 @@ class Affichages:
         # Dernière ligne
         label = Button(root, text="/\Choisir votre combinaison/\\", font=(10), bg="#4d99c7", command=partial(TransitionAffichages, True))
         label.grid(row=3,column=1,columnspan=2,ipadx=40,ipady=20)
-        button = Button(root, text="Valider", command=root.destroy, bg="#6bc55d", activebackground="grey") # bouton vert 
+        button = Button(root, text="Valider", command=ButtonValider, bg="#6bc55d", activebackground="grey") # bouton vert 
         button.grid(row=3,column=0,ipadx=50,ipady=30)
-        button = Button(root, text="Annuler", command=root.destroy, bg="#db2915", activebackground="grey") # bouton rouge
+        button = Button(root, text="Annuler", command=ButtonCancel, bg="#db2915", activebackground="grey") # bouton rouge
         button.grid(row=3,column=3,ipadx=50,ipady=30)
-        root.mainloop()
-    def Secondaire(root):
+    def Secondaire():
         def ClicClr(clr):
             """Ajoute la couleur choisie (selon le bouton) à CombUser si possible et met à jour les textes"""
             if len(CombUser)<4:    
@@ -114,30 +130,48 @@ class Affichages:
         button.grid(row=4, column=0,ipadx=50,ipady=30)
         button = Button(root, text="Annuler", bg="#db2915", command=partial(TransitionAffichages, False, None),font=(10))
         button.grid(row=4, column=2,ipadx=50,ipady=30)
+    def EcranVictoire():
+        """Ecran de victoire à afficher"""
+        for w in root.winfo_children():
+            w.destroy()
+            root.pack_propagate(0)
+        for i in range(4):
+            root.rowconfigure(i,weight=1)
+        for i in range(4):    
+            root.columnconfigure(i,weight=1)
+        label = Label(root, text="Bravo, vous avez trouvé la bonne combinaison !", font=(10))
+        label.grid(row=0,column=0,columnspan=4)
+        label = Label(root, text="Combinaison trouvée :", font=(10))
+        label.grid(row=1,column=0,columnspan=4)
+        # Affichage combinaison user
+        for i in range(4):
+            valClr = Affichage.CombinaisonUser[i]
+            label = Label(root, text=valClr, bg=couleurs[valClr], relief=RAISED, font=(8))
+            label.grid(row=2, column=i,ipadx=75,ipady=75)
+        button = Button(root, text="Quitter le jeu", command=root.destroy, font=(10), bg="#c94d4d")
+        button.grid(row=3, column=1, columnspan=2, ipadx=100, ipady=40)
+    def EcranDefaite():
+        """Ecran de défaite à afficher"""
+        for w in root.winfo_children():
+            w.destroy()
+            root.pack_propagate(0)
+        pass
 # Texte d'explication (introduction)
 root = Tk()
 Affichage = Affichages
-Affichage.Intro(root)
+Affichage.Intro()
 # programme
-CombinaisonUser = [-1,-1,-1,-1]
+Affichage.CombinaisonUser = [-1,-1,-1,-1]
 ResultatEssai = [-1,-1,-1,-1]
 CombinaisonATrouver = init()
+print(CombinaisonATrouver) # debug
 couleurs = {-1:"grey","B":"white","N":"black"\
     ,0:"red",1:"yellow",2:"orange",3:"blue",4:"green",5:"white",6:"pink",7:"purple",8:"#00ffec"}
 root = Tk()
 root.geometry("600x600")
-Affichage.Principale(root) # Affichage première fenêtre
+Affichage.Principale() # Affichage première fenêtre
+root.mainloop()
 """
-while nEssais<10 and not CombinaisonUser==CombinaisonATrouver: # Boucle jeu
-    nEssais+=1
-    # print(CombinaisonATrouver) # debug victoire
-    CombinaisonUser = essai()
-    while CombinaisonUser==-1: # Demande Combinaison
-        Tools.suppr(1)
-        CombinaisonUser = essai()
-    print("Combinaison choisie :",CombinaisonUser)
-    ResultatEssai = test(CombinaisonUser,CombinaisonATrouver)
-    print("Résultat :",ResultatEssai)
 if CombinaisonUser==CombinaisonATrouver: # Si gagné
     print("Bravo, la combinaison était bien",CombinaisonATrouver)
     print("Gagné !")
