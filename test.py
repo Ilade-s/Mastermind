@@ -1,6 +1,7 @@
 # test.py
+from random import shuffle
 def test(CombiUser : list[int], combiOrigin : list[int]) -> list[str]:
-  """Donné deux listes : combiUser et combiOrigin, renvoie une liste de Noirs (N) et de Blancs (B)"""
+  """Donné deux listes : combiUser et combiOrigin, renvoie une liste de Noirs (N) et de Blancs (B), soit dans l'ordre, soit dans un ordre aléatoire (aléatoire par défaut)"""
   listNoirBlanc = []
   if len(CombiUser)!=4:
     return listNoirBlanc
@@ -9,6 +10,7 @@ def test(CombiUser : list[int], combiOrigin : list[int]) -> list[str]:
       listNoirBlanc.append("N")
     elif CombiUser[i] in combiOrigin:
       listNoirBlanc.append("B")
+  shuffle(listNoirBlanc) # Désactivation possible mais permettant la triche
   return listNoirBlanc
   
 if __name__ == "__main__": # test
