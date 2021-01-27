@@ -69,9 +69,10 @@ class Affichages:
                 if ResultatFpartie[1]: # Victoire
                     Affichage.EcranVictoire()
                 else: # Défaite
-                    Affichage.EcranDefaite
-            Affichage.CombinaisonUser = [-1,-1,-1,-1]
-            Affichage.Principale() # Mise à jour
+                    Affichage.EcranDefaite()
+            else: # Partie pas terminée
+                Affichage.CombinaisonUser = [-1,-1,-1,-1]
+                Affichage.Principale() # Mise à jour
         """Fenêtre affichant la combinaison choisie et le résultat précédent, et permet à l'utilsateur de valider son choix"""
         ResultatEssai = CompleterResEssai(test(Affichage.CombinaisonUser, CombinaisonATrouver))
         root.title("Mastermind : fenêtre principale")
