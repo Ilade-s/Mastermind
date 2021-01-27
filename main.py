@@ -58,6 +58,7 @@ class Affichages: # Les différentes fenêtres et les variables nécessaires
         button.pack(pady=10,padx=10)
         root.mainloop()
     def Principale(self):
+        """Fenêtre principale et de validation"""
         def ButtonCancel():
             """Réinitialisation par clic bouton annuler"""
             Affichage.CombinaisonUser = [-1,-1,-1,-1]
