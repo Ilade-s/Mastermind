@@ -59,7 +59,6 @@ class Affichages:
         button.pack(pady=10,padx=10)
         root.mainloop()
     def Principale(self):
-        Affichage.nEssais
         def ButtonCancel():
             """Réinitialisation par clic bouton annuler"""
             Affichage.CombinaisonUser = [-1,-1,-1,-1]
@@ -75,7 +74,12 @@ class Affichages:
             else: # Partie pas terminée
                 self.nEssais+=1
                 Affichage.ResultatEssai = CompleterResEssai(test(Affichage.CombinaisonUser, CombinaisonATrouver))
-                Affichage.Principale() # Mise à jour
+                for i in range(len(self.ResultatEssai)):
+                    valClr = self.ResultatEssai[i]
+                    label = Label(root, text=valClr, bg=couleurs[valClr], relief=RAISED, foreground="red", font=(8))
+                    label.grid(row=1, column=i,ipadx=75,ipady=75)
+                label = Label(root, text="Il vous reste "+str(10-Affichage.nEssais)+" essais restants", font=(10))
+                label.grid(row=0,column=0,columnspan=4)
         """Fenêtre affichant la combinaison choisie et le résultat précédent, et permet à l'utilsateur de valider son choix"""
         root.title("Mastermind : fenêtre principale")
         for i in range(4):
@@ -102,6 +106,7 @@ class Affichages:
         button = Button(root, text="Annuler", command=ButtonCancel, bg="#db2915", activebackground="grey") # bouton rouge
         button.grid(row=3,column=3,ipadx=50,ipady=30)
     def Secondaire(self):
+        """Fenêtre permettant de choisir la combinaison à essayer"""
         def ClicClr(clr):
             """Ajoute la couleur choisie (selon le bouton) à CombUser si possible et met à jour les textes"""
             if len(CombUser)<4:    
@@ -190,11 +195,3 @@ root = Tk()
 root.geometry("600x600")
 Affichage.Principale() # Affichage première fenêtre
 root.mainloop()
-"""
-if CombinaisonUser==CombinaisonATrouver: # Si gagné
-    print("Bravo, la combinaison était bien",CombinaisonATrouver)
-    print("Gagné !")
-else:
-    print("Pas de chance, la combinaison a trouver était :",CombinaisonATrouver)
-    print("Perdu !")
-"""
