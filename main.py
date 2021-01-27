@@ -5,8 +5,7 @@ from essai import *
 from tkinter import *  # GUI
 from ToolsPerso import * # outils
 from functools import partial # pour commande avec args tkinter
-
-
+# programme
 CombinaisonATrouver = init()
 def CompleterResEssai(ResEssai: list):
     """Compléte la liste ResultatEssai si sa taille est inférieure à 4"""
@@ -32,7 +31,7 @@ def FinDePartie() -> tuple:
         return(True, False)
     else: # Partie pas terminée
         return(False, False)
-class Affichages:
+class Affichages: # Les différentes fenêtres et les variables nécessaires
     """Affichages tkinter"""
     def __init__(self) -> None:
         self.CombinaisonUser = []
@@ -184,14 +183,13 @@ class Affichages:
 # Texte d'explication (introduction)
 root = Tk()
 Affichage = Affichages()
-Affichage.Intro()
+Affichage.Intro() # Affichage texte d'introduction
 # programme
 Affichage.CombinaisonUser = [-1,-1,-1,-1]
-CombinaisonATrouver = init()
-print(CombinaisonATrouver) # debug
+# print(CombinaisonATrouver) # debug
 couleurs = {-1:"grey","B":"white","N":"black"\
     ,0:"red",1:"yellow",2:"orange",3:"blue",4:"green",5:"white",6:"pink",7:"purple",8:"#00ffec"}
 root = Tk()
 root.geometry("600x600")
 Affichage.Principale() # Affichage première fenêtre
-root.mainloop()
+root.mainloop() # Boucle d'affichage tkinter
