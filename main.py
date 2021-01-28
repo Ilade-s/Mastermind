@@ -65,6 +65,7 @@ class Affichages: # Les différentes fenêtres et les variables nécessaires
             Affichage.Principale() # Mise à jour
         def ButtonValider():
             """Changement de tour avec bouton valider"""
+            self.nEssais+=1
             ResultatFpartie = FinDePartie()
             if ResultatFpartie[0]: # Partie terminée
                 if ResultatFpartie[1]: # Victoire
@@ -72,13 +73,12 @@ class Affichages: # Les différentes fenêtres et les variables nécessaires
                 else: # Défaite
                     Affichage.EcranDefaite()
             else: # Partie pas terminée
-                self.nEssais+=1
                 Affichage.ResultatEssai = CompleterResEssai(test(Affichage.CombinaisonUser, CombinaisonATrouver))
                 for i in range(len(self.ResultatEssai)):
                     valClr = self.ResultatEssai[i]
                     label = Label(root, text=valClr, bg=couleurs[valClr], relief=RAISED, foreground="red", font=(8))
                     label.grid(row=1, column=i,ipadx=75,ipady=75)
-                label = Label(root, text="Il vous reste "+str(10-Affichage.nEssais)+" essais restants", font=(10))
+                label = Label(root, text="Il vous reste "+str(10-Affichage.nEssais)+" essais", font=(10))
                 label.grid(row=0,column=0,columnspan=4)
         """Fenêtre affichant la combinaison choisie et le résultat précédent, et permet à l'utilsateur de valider son choix"""
         root.title("Mastermind : fenêtre principale")
@@ -86,7 +86,7 @@ class Affichages: # Les différentes fenêtres et les variables nécessaires
             root.rowconfigure(i,weight=1)
         for j in range(4):
             root.columnconfigure(j,weight=1)
-        label = Label(root, text="Il vous reste "+str(10-Affichage.nEssais)+" essais restants", font=(10))
+        label = Label(root, text="Il vous reste "+str(10-Affichage.nEssais)+" essais", font=(10))
         label.grid(row=0,column=0,columnspan=4)
         # Affichage combinaison user
         for i in range(len(Affichage.CombinaisonUser)):
