@@ -1,7 +1,7 @@
-# init.py
-import random as rnd
+import random
+#init crée une liste de 4 couleurs a découvrir 
 def init() -> list[int]:
-  """Crée une liste de 4 valeurs aléatoires entre 0 et 8
+    """Crée une liste de 4 valeurs aléatoires entre 0 et 8
 
     Paramètres
     ----------
@@ -11,10 +11,10 @@ def init() -> list[int]:
     -------
     list[int]
         liste de valeurs aléatoire entre 0 et 8 inclus
-  """
-  combinaison = [rnd.randint(0,8) for i in range(4)]
-  return(combinaison)
+    """
+    couleur = random.sample(range(8), 4)
+    return(couleur)
 
-if __name__ == "__main__": # test
-  combinaison = init()
-  print(combinaison)
+if __name__ == "__main__":
+    combinaison = init()
+    print(combinaison)
